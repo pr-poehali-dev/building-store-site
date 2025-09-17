@@ -113,10 +113,7 @@ const Index = () => {
                   <Icon name="Sparkles" size={20} className="mr-2" />
                   Попробовать ИИ-помощника
                 </Button>
-                <Button size="lg" variant="outline">
-                  <Icon name="Play" size={20} className="mr-2" />
-                  Смотреть демо
-                </Button>
+                <Button size="lg" variant="outline"></Button>
               </div>
             </div>
             
