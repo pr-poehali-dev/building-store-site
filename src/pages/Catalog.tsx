@@ -1,12 +1,10 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Slider } from '@/components/ui/slider';
 import Icon from '@/components/ui/icon';
+import CatalogHeader from '@/components/catalog/CatalogHeader';
+import CatalogFilters from '@/components/catalog/CatalogFilters';
+import ProductCard from '@/components/catalog/ProductCard';
 
 interface Product {
   id: number;
@@ -163,30 +161,19 @@ const Catalog = () => {
 
   const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
-      // Поиск по названию и тегам
       const matchesSearch = searchQuery === '' || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      // Фильтр по категории
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-
-      // Фильтр по брендам
       const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
-
-      // Фильтр по цене
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-
-      // Фильтр по наличию
       const matchesStock = !showOnlyInStock || product.inStock;
-
-      // Фильтр по скидкам
       const matchesDiscount = !showOnlyDiscount || product.discount;
 
       return matchesSearch && matchesCategory && matchesBrand && matchesPrice && matchesStock && matchesDiscount;
     });
 
-    // Сортировка
     switch (sortBy) {
       case 'price-asc':
         filtered.sort((a, b) => a.price - b.price);
@@ -203,7 +190,7 @@ const Catalog = () => {
       case 'discount':
         filtered.sort((a, b) => (b.discount || 0) - (a.discount || 0));
         break;
-      default: // popularity
+      default:
         filtered.sort((a, b) => b.reviews - a.reviews);
     }
 
@@ -220,153 +207,28 @@ const Catalog = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
-              <Button variant="ghost" className="lg:hidden">
-                <Icon name="Menu" size={20} />
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Icon name="Store" className="text-primary" size={24} />
-                <span className="font-heading font-bold text-xl">Каталог товаров</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a href="/">
-                <Button variant="outline" size="sm">
-                  <Icon name="ArrowLeft" size={16} className="mr-2" />
-                  На главную
-                </Button>
-              </a>
-              <Button size="sm" className="bg-primary hover:bg-primary/90">
-                <Icon name="ShoppingCart" size={16} className="mr-2" />
-                Корзина
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <CatalogHeader />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Filters */}
-          <div className="lg:w-80 space-y-6">
-            {/* Search */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-heading">Поиск</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="relative">
-                  <Icon name="Search" className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                  <Input
-                    placeholder="Найти товар..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          <CatalogFilters
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedBrands={selectedBrands}
+            handleBrandChange={handleBrandChange}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            showOnlyInStock={showOnlyInStock}
+            setShowOnlyInStock={setShowOnlyInStock}
+            showOnlyDiscount={showOnlyDiscount}
+            setShowOnlyDiscount={setShowOnlyDiscount}
+            categories={categories}
+            brands={brands}
+          />
 
-            {/* Category Filter */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-heading">Категория</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map(category => (
-                      <SelectItem key={category.value} value={category.value}>
-                        {category.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </CardContent>
-            </Card>
-
-            {/* Brand Filter */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-heading">Бренд</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {brands.map(brand => (
-                  <div key={brand} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={brand}
-                      checked={selectedBrands.includes(brand)}
-                      onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
-                    />
-                    <label htmlFor={brand} className="text-sm cursor-pointer">
-                      {brand}
-                    </label>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Price Filter */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-heading">Цена</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Slider
-                  value={priceRange}
-                  onValueChange={setPriceRange}
-                  max={50000}
-                  min={0}
-                  step={100}
-                  className="w-full"
-                />
-                <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span>{priceRange[0].toLocaleString()}₽</span>
-                  <span>{priceRange[1].toLocaleString()}₽</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Additional Filters */}
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-heading">Дополнительно</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="inStock"
-                    checked={showOnlyInStock}
-                    onCheckedChange={setShowOnlyInStock}
-                  />
-                  <label htmlFor="inStock" className="text-sm cursor-pointer">
-                    Только в наличии
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="discount"
-                    checked={showOnlyDiscount}
-                    onCheckedChange={setShowOnlyDiscount}
-                  />
-                  <label htmlFor="discount" className="text-sm cursor-pointer">
-                    Только со скидкой
-                  </label>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Main Content */}
           <div className="flex-1">
-            {/* Sort and Results */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
               <div className="mb-4 sm:mb-0">
                 <h1 className="text-2xl font-heading font-bold text-gray-900">
@@ -392,91 +254,9 @@ const Catalog = () => {
               </div>
             </div>
 
-            {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProducts.map(product => (
-                <Card key={product.id} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute top-4 left-4 flex flex-col gap-2">
-                      {product.discount && (
-                        <Badge className="bg-red-500 text-white">
-                          -{product.discount}%
-                        </Badge>
-                      )}
-                      {!product.inStock && (
-                        <Badge variant="secondary" className="bg-gray-500 text-white">
-                          Нет в наличии
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="absolute top-4 right-4">
-                      <Button size="sm" variant="ghost" className="bg-white/80 hover:bg-white">
-                        <Icon name="Heart" size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <CardContent className="p-6">
-                    <div className="mb-2">
-                      <Badge variant="outline" className="text-xs">
-                        {categories.find(c => c.value === product.category)?.label}
-                      </Badge>
-                      <Badge variant="outline" className="text-xs ml-2">
-                        {product.brand}
-                      </Badge>
-                    </div>
-                    
-                    <h3 className="font-heading font-semibold text-lg mb-2 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                      {product.description}
-                    </p>
-                    
-                    <div className="flex items-center mb-3">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Icon 
-                            key={i}
-                            name="Star" 
-                            size={14} 
-                            className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-sm text-gray-600 ml-2">
-                        {product.rating} ({product.reviews})
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-2xl font-bold text-primary">
-                          {product.price.toLocaleString()}₽
-                        </span>
-                        {product.oldPrice && (
-                          <span className="text-sm text-gray-500 line-through ml-2">
-                            {product.oldPrice.toLocaleString()}₽
-                          </span>
-                        )}
-                      </div>
-                      <Button 
-                        size="sm" 
-                        className="bg-primary hover:bg-primary/90"
-                        disabled={!product.inStock}
-                      >
-                        <Icon name="Plus" size={16} className="mr-1" />
-                        {product.inStock ? 'В корзину' : 'Недоступен'}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ProductCard key={product.id} product={product} categories={categories} />
               ))}
             </div>
 
@@ -505,7 +285,6 @@ const Catalog = () => {
               </div>
             )}
 
-            {/* Pagination */}
             {filteredProducts.length > 0 && (
               <div className="flex justify-center mt-12">
                 <div className="flex items-center space-x-2">
