@@ -84,7 +84,7 @@ const Index = () => {
               </div>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
+              <a href="/catalog" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
               <a href="#" className="text-gray-700 hover:text-primary transition-colors">Услуги</a>
               <a href="#" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
               <a href="#" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
