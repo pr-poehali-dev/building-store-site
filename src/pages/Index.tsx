@@ -86,7 +86,7 @@ const Index = () => {
             <nav className="hidden md:flex space-x-8">
               <a href="/catalog" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
               <a href="/services" className="text-gray-700 hover:text-primary transition-colors">Услуги</a>
-              <a href="#" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
+              <a href="/promotions" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
               <a href="#" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
             </nav>
             <Button className="bg-primary hover:bg-primary/90">
@@ -247,8 +247,10 @@ const Index = () => {
             <p className="text-xl mb-6">Скидка 25% на все электроинструменты при покупке от 10,000₽</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100">
-                <Icon name="Zap" size={20} className="mr-2" />
-                Смотреть акции
+                <a href="/promotions" className="flex items-center">
+                  <Icon name="Zap" size={20} className="mr-2" />
+                  Смотреть акции
+                </a>
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
                 <Icon name="Bell" size={20} className="mr-2" />
