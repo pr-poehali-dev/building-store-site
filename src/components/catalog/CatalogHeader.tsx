@@ -12,7 +12,7 @@ const CatalogHeader = () => {
             </Button>
             <div className="flex items-center space-x-2">
               <Icon name="Store" className="text-primary" size={24} />
-              <span className="font-heading font-bold text-xl">Каталог товаров</span>
+              <span className="font-heading font-bold text-xl">Наши акции</span>
             </div>
           </div>
           <div className="flex items-center space-x-4">
