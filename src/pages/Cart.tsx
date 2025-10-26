@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import Header from '@/components/Header';
 
 interface CartItem {
   id: number;
@@ -68,34 +69,7 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-blue-50">
-      <header className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Icon name="Hammer" className="text-white" size={24} />
-              </div>
-              <div>
-                <h1 className="text-2xl font-heading font-bold text-gray-900">СтройМаркет</h1>
-                <p className="text-sm text-gray-600">Всё для строительства и ремонта</p>
-              </div>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="/" className="text-gray-700 hover:text-primary transition-colors">Главная</a>
-              <a href="/catalog" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
-              <a href="/services" className="text-gray-700 hover:text-primary transition-colors">Услуги</a>
-              <a href="/promotions" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
-              <a href="/contacts" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
-            </nav>
-            <Button className="bg-primary hover:bg-primary/90" asChild>
-              <a href="/cart">
-                <Icon name="ShoppingCart" size={18} className="mr-2" />
-                Корзина ({cartItems.length})
-              </a>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header currentPage="cart" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">

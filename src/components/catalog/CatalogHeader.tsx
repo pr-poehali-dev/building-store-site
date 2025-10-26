@@ -22,9 +22,17 @@ const CatalogHeader = () => {
                 На главную
               </Button>
             </a>
-            <Button size="sm" className="bg-primary hover:bg-primary/90">
-              <Icon name="ShoppingCart" size={16} className="mr-2" />
-              Корзина
+            <Button variant="outline" size="sm" asChild>
+              <a href="/auth">
+                <Icon name="User" size={16} className="mr-2" />
+                Войти
+              </a>
+            </Button>
+            <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
+              <a href="/cart">
+                <Icon name="ShoppingCart" size={16} className="mr-2" />
+                Корзина
+              </a>
             </Button>
           </div>
         </div>

@@ -130,7 +130,7 @@ const Services = () => {
   const allTags = Array.from(new Set(services.flatMap(service => service.tags)));
 
   const filteredServices = useMemo(() => {
-    let filtered = services.filter(service => {
+    const filtered = services.filter(service => {
       const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           service.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -193,6 +193,12 @@ const Services = () => {
                   На главную
                 </Button>
               </a>
+              <Button variant="outline" size="sm" asChild>
+                <a href="/auth">
+                  <Icon name="User" size={16} className="mr-2" />
+                  Войти
+                </a>
+              </Button>
               <Button size="sm" className="bg-primary hover:bg-primary/90">
                 <Icon name="Phone" size={16} className="mr-2" />
                 Заказать
