@@ -87,11 +87,13 @@ const Index = () => {
               <a href="/catalog" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
               <a href="/services" className="text-gray-700 hover:text-primary transition-colors">Услуги</a>
               <a href="/promotions" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
-              <a href="#" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
+              <a href="/contacts" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
             </nav>
-            <Button className="bg-primary hover:bg-primary/90">
-              <Icon name="ShoppingCart" size={18} className="mr-2" />
-              Корзина
+            <Button className="bg-primary hover:bg-primary/90" asChild>
+              <a href="/cart">
+                <Icon name="ShoppingCart" size={18} className="mr-2" />
+                Корзина
+              </a>
             </Button>
           </div>
         </div>
