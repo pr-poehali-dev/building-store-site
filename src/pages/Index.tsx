@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import Header from '@/components/Header';
 
 const Index = () => {
   const [aiQuery, setAiQuery] = useState('');
@@ -70,42 +71,49 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Icon name="Hammer" className="text-white" size={24} />
+      <Header currentPage="home" />
+
+      {/* Hero Cover Section */}
+      <section className="relative h-[500px] overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src="https://cdn.poehali.dev/projects/d8e9b481-7986-4ad8-85f5-c9b01f24206b/files/d606e461-4aac-4a23-abf5-3f4e83812259.jpg" 
+            alt="СтройМаркет"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" />
+        </div>
+        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+          <div className="text-white space-y-6 animate-fade-in">
+            <div className="flex items-center space-x-4">
+              <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+                <Icon name="Hammer" className="text-white" size={32} />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-bold text-gray-900">СтройМаркет</h1>
-                <p className="text-sm text-gray-600">Всё для строительства и ремонта</p>
+                <h1 className="text-5xl md:text-6xl font-heading font-bold">СтройМаркет</h1>
+                <p className="text-xl md:text-2xl text-orange-200 mt-2">Всё для строительства и ремонта</p>
               </div>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="/catalog" className="text-gray-700 hover:text-primary transition-colors">Каталог</a>
-              <a href="/services" className="text-gray-700 hover:text-primary transition-colors">Услуги</a>
-              <a href="/promotions" className="text-gray-700 hover:text-primary transition-colors">Акции</a>
-              <a href="/contacts" className="text-gray-700 hover:text-primary transition-colors">Контакты</a>
-            </nav>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" asChild>
-                <a href="/auth">
-                  <Icon name="User" size={18} className="mr-2" />
-                  Войти
+            <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-relaxed">
+              «Строим вместе — строим качественно!»
+            </p>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg" asChild>
+                <a href="/catalog">
+                  <Icon name="ShoppingBag" size={20} className="mr-2" />
+                  Каталог товаров
                 </a>
               </Button>
-              <Button className="bg-primary hover:bg-primary/90" asChild>
-                <a href="/cart">
-                  <Icon name="ShoppingCart" size={18} className="mr-2" />
-                  Корзина
+              <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 text-lg" asChild>
+                <a href="/services">
+                  <Icon name="Wrench" size={20} className="mr-2" />
+                  Наши услуги
                 </a>
               </Button>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
       {/* Hero Section with AI Assistant */}
       <section className="relative overflow-hidden py-20">
